@@ -55,9 +55,7 @@ function categorizeOBB(trName: string, nameR: string, isCredit: boolean): string
 }
 
 // Detect currency from IBAN
-function detectCurrency(iban: string): string {
-  // EUR accounts usually have specific patterns
-  // But for now, we'll default to BGN and check transactions
+function detectCurrency(): string {
   return 'BGN';
 }
 
@@ -75,7 +73,7 @@ export function parseOBBXML(xmlContent: string): BankStatement {
   const closingBalance = parseAmount(xmlDoc.querySelector('CLOSE_BALANCE')?.textContent || '0');
 
   // Try to detect currency from transactions or default to BGN
-  let currency = detectCurrency(iban);
+  let currency = detectCurrency();
 
   const transactions: Transaction[] = [];
   const transactionNodes = xmlDoc.querySelectorAll('TRANSACTION');
